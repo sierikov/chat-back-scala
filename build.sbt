@@ -13,5 +13,5 @@ libraryDependencies ++= Seq(
   "io.getquill"   %% "quill-zio"            % "4.6.0",
   "io.getquill"   %% "quill-jdbc-zio"       % "4.6.0",
   "com.h2database" % "h2"                   % "2.1.214",
-  "org.slf4j"      % "slf4j-simple"         % "2.0.3"
+  "org.slf4j"      % "slf4j-simple"       % "2.0.3"
 )
