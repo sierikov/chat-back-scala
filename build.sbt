@@ -3,7 +3,7 @@ name         := "chat-back-zio"
 
 libraryDependencies ++= Seq(
   "dev.zio"       %% "zio"                  % "2.0.2",
-  "dev.zio"       %% "zio-json"             % "0.3.0-RC11",
+  "dev.zio"       %% "zio-json"             % "0.3.0",
   "dev.zio"       %% "zio-config"           % "3.0.2",
   "dev.zio"       %% "zio-config-typesafe"  % "3.0.2",
   "dev.zio"       %% "zio-config-magnolia"  % "3.0.2",
