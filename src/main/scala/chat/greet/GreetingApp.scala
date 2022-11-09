@@ -14,7 +14,7 @@ object GreetingApp:
     Http.collect[Request] {
 
       // GET /greet?name=:name
-      case req@(Method.GET -> !! / "greet") if (req.url.queryParams.nonEmpty) =>
+      case req@(Method.GET -> !! / "greet") if (req.url.queryParams.nonEmpty && req.url.queryParams.contains("name")) =>
        Response.text(s"Hello ${req.url.queryParams("name").mkString(" and ")}!")
 
       // GET /greet
