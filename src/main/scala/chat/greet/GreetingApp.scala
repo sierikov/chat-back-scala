@@ -24,7 +24,6 @@ object GreetingApp:
 
       // GET /greet/:name
       case Method.GET -> !! / "greet" / name =>
-        ZIO.log("some message")
         Response.text(s"Hello $name!")
 
 

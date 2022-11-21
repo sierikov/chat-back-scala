@@ -1,25 +1,25 @@
 package chat.auth
 
-import chat.dto.CreateUserDto
-import chat.dto.CreateUserDto.*
+import chat.dto.UserCreateDto
+import chat.dto.UserCreateDto.*
+import zio.*
+import zio.json.*
 import zhttp.http.*
-import zio.json.{DecoderOps, EncoderOps}
+
 
 object AuthLayer {
-  def apply(): Http[Any, Nothing, Request, Response] =
-    Http.collect[Request] {
+  def apply(): Http[Any, Throwable, Request, Response] =
+    Http.collectZIO[Request] {
 
-      case req@(Method.POST -> !! / "auth" / "register") =>
-
-        req.bodyAsString
-          .flatMap(
-            _.fromJson[CreateUserDto].flatMap {
-              u => Response.text(s"Hello ${u.lastName}!\nFull Object: ${u.toJson}")
-            }.orElse(Response.text("Failed"))
-          )
-          .orDie
-
-
-
+      case req@(Method.POST -> !! / "auth" / "register") => {
+        val userZIO = req.bodyAsString.map(_.fromJson[UserCreateDto])
+        for {
+          user <- userZIO
+          response <- user match {
+            case Left(e) => Response.text(e).setStatus(Status.BadRequest)
+            case Right(u: UserCreateDto) => ZIO.succeed(Response.json(u.toJsonPretty(UserCreateDto.encoder)))
+          }
+        } yield response
+      }
     }
 }
